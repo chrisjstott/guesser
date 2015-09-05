@@ -1,50 +1,57 @@
-<form action="<%= people_url %>" method="post">
+<div class="main">
+  <h1>Gender Guesser!</h1>
 
-  <input
-   type="hidden"
-    name="authenticity_token"
-    value="<%= form_authenticity_token %>"
-  >
+  <form action="<%= people_url %>" method="post">
+    
+    <input
+     type="hidden"
+      name="authenticity_token"
+      value="<%= form_authenticity_token %>"
+    >
+    
+    <input
+      type="hidden"
+      name="person[gender]"
+      id="person_gender"
+    >
+
+    <div class="form-group form-inline">
+    <label for="person_height">Your Height (in inches)</label>
+    <input
+      type="text"
+      name="person[height]"
+      value="<%= @person.height %>"
+      id="person_height"
+      class='form-control input-lg'
+    >
+    </div>
   
-  <input
-    type="hidden"
-    name="person[gender]"
-    id="person_gender"
-  >
-
-  <label for="person_height">Your Height (in inches)</label>
-  <input
-    type="text"
-    name="person[height]"
-    value="<%= @person.height %>"
-    id="person_height"
-    class='first-input'
-  >
-
-  <label for="person_weight">Your Weight (in lbs)</label>
-  <input
-    type="text"
-    name="person[weight]"
-    value="<%= @person.weight %>"
-    id="person_weight"
-    class='first-input'
-  >
-
-  <button id='submit-height-weight' class='first-input'>Submit!</button>
-
-</form>
-
-<div class='check-guess' style='display:none'>
-  <p class='guess'></p>
-  <p>Is this correct?</p>
-  <button class='correct'>Yes</button>
-  <button class='incorrect'>No</button>
+    <div class="form-group form-inline">
+    <label for="person_weight">Your Weight (in lbs)</label>
+    <input
+      type="text"
+      name="person[weight]"
+      value="<%= @person.weight %>"
+      id="person_weight"
+      class='form-control input-lg'
+    >
+    </div>
+    
+    <button id='submit-height-weight' class='first-input btn-lg btn btn-primary'>Submit!</button>
+  
+  </form>
+  
+  <div class='check-guess'>
+    <p class='guess'></p>
+    <p>Is this correct?</p>
+    <button class='correct btn btn-lg btn-primary'>Yes</button>
+    <button class='incorrect btn btn-lg btn-primary'>No</button>
+  </div>
+  
+  
+  <div class='response'>
+    <p></p>
+    <a href='/people/new' class="btn btn-lg btn-primary" role="button">Start Over</a>
+  </div>
 </div>
-
-
-<div class='response' style='display:none'>
-  <p></p>
-  <a href='/people/new'>Start Over</a>
-</div>
-
 

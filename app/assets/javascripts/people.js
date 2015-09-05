@@ -5,7 +5,7 @@ $(document).ready(function() {
   $("button#submit-height-weight").on("click", function(event) {
     event.preventDefault();
 
-    $('.first-input').prop('disabled', true);
+    $('form').hide();
 
     $.ajax({
       type: 'GET',
@@ -47,8 +47,7 @@ $(document).ready(function() {
     
     $('div.check-guess').hide();
     $('div.response').show();
-    $('.first-input').prop('disabled', false);
-      
+
     $.ajax({
       type: 'POST',
       url: '/people',
