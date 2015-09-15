@@ -1,31 +1,54 @@
-
 $(document).ready(function() {
   var $form = $('form');
 
   $("button#submit-height-weight").on("click", function(event) {
     event.preventDefault();
-
-    $('form').hide();
-
-    $.ajax({
-      type: 'GET',
-      url: '/people',
-      data: $form.serialize(),
-      dataType: 'json',
-      success: function(resp) {
-        $('div.check-guess').show();
-  
-        var percentChanceMale = resp.percentMaleAtHeight * 0.5 + resp.percentMaleAtWeight * 0.5;
-  
-        if (percentChanceMale > 0.5) {
-          $('.guess').html('My guess is: Male');
-          $('button.correct').addClass('male');
-        } else {
-          $('.guess').html('My guess is: Female');
-          $('button.incorrect').addClass('male');
-        }
+    
+    var validateForm = function () {
+      $height = $('#person_height');
+      $weight = $('#person_weight');
+      
+      var complete = true;
+      
+      if ($height.val() === "" || isNaN($height.val())) {
+        complete = false;
+        $height.parent().addClass('has-error');
+      } else {
+        $height.parent().removeClass('has-error');
       }
-    });
+      if ($weight.val() === "" || isNaN($weight.val())) {
+        complete = false;
+        $weight.parent().addClass('has-error');
+      } else {
+        $weight.parent().removeClass('has-error');
+      }
+      
+      return complete;
+    };
+    
+    if (validateForm()) {
+      $('form').hide();
+  
+      $.ajax({
+        type: 'GET',
+        url: '/people',
+        data: $form.serialize(),
+        dataType: 'json',
+        success: function(resp) {
+          $('div.check-guess').show();
+    
+          var percentChanceMale = resp.percentMaleAtHeight * 0.5 + resp.percentMaleAtWeight * 0.5;
+    
+          if (percentChanceMale > 0.5) {
+            $('.guess').html('My guess is: Male');
+            $('button.correct').addClass('male');
+          } else {
+            $('.guess').html('My guess is: Female');
+            $('button.incorrect').addClass('male');
+          }
+        }
+      });
+    }
   });
   
   $('.check-guess button').on("click", function(event) {
@@ -40,9 +63,9 @@ $(document).ready(function() {
     }
     
     if ($button.hasClass('correct')) {
-      $('div.response p').html("Yay I got it right");
+      $('div.response p').html("Awesome!");
     } else {
-      $('div.response p').html("Aww Crap");
+      $('div.response p').html("Bummer!");
     }
     
     $('div.check-guess').hide();
