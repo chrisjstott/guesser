@@ -21,21 +21,21 @@ class PeopleController < ApplicationController
     height = person.height
     weight = person.weight
     
-    people_at_height = Person.where(height: (height.to_i - 1)..(height.to_i + 1))
+    people_at_height = Person.where(height: (height.to_i - 3)..(height.to_i + 3))
     if people_at_height.count > 0
-      percent_male_at_height = people_at_height.where(gender: 'M').count/people_at_height.count
+      percent_male_at_height = people_at_height.where(gender: 'M').count/people_at_height.count.to_f
     else
       percent_male_at_height = 0.5
     end
       
-    people_at_weight = Person.where(weight: (weight.to_i - 3)..(weight.to_i + 3))
+    people_at_weight = Person.where(weight: (weight.to_i - 5)..(weight.to_i + 5))
     if people_at_weight.count > 0
-      percent_male_at_weight = people_at_weight.where(gender: 'M').count/people_at_weight.count
+      percent_male_at_weight = people_at_weight.where(gender: 'M').count/people_at_weight.count.to_f
     else
       percent_male_at_weight = 0.5
     end
 
-    render json: '{"percentMaleAtHeight": "#{percent_male_at_height}", "percentMaleAtWeight": "#{percent_male_at_weight}"}'
+    render json: "{\"percentMaleAtHeight\":\"#{percent_male_at_height}\", \"percentMaleAtWeight\":\"#{percent_male_at_weight}\"}"
   end
   
 private
